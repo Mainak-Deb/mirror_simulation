@@ -56,24 +56,17 @@ def dot(vA, vB):
 def angle_incident(line1,line2):
     lineA = [line1.point1, line1.point2]
     lineB = [line2.point1,line2.point2]
-    # Get nicer vector form
     vA = [(lineA[0][0]-lineA[1][0]), (lineA[0][1]-lineA[1][1])]
     vB = [(lineB[0][0]-lineB[1][0]), (lineB[0][1]-lineB[1][1])]
-    # Get dot prod
     dot_prod = dot(vA, vB)
-    # Get magnitudes
     magA = dot(vA, vA)**0.5
     magB = dot(vB, vB)**0.5
-    # Get cosine value
     cos_ = dot_prod/magA/magB
-    # Get angle in radians and then convert to degrees
-    print(dot_prod/magB/magA)
+    #print(dot_prod/magB/magA)
     angle = math.acos(min(1,max(dot_prod/magB/magA,-1)))
-    # Basically doing angle <- angle mod 360
     ang_deg = math.degrees(angle)%360
     
     if ang_deg-180>=0:
-        # As in if statement
         return 360 - ang_deg
     else: 
         
@@ -90,11 +83,11 @@ def check(screen,light,mirrors):
             newarr.append(i.reflector)
     #print(newarr)
     p1,p2,reflector=shortest(light,newarr)
-    pygame.draw.line(screen,(0,0,255),light.point,(p1,p2),4)
+    pygame.draw.line(screen,(255, 233, 36),light.point,(p1,p2),4)
     if(len(newarr)>0):
         inc_ang=angle_incident(light,reflector)
         next_ang=(-1)*(inc_ang+(180-reflector.lineangle))
-        next_line=angleline(screen,(p1,p2),next_ang,(0,0,255))
+        next_line=angleline(screen,(p1,p2),next_ang,(255, 233, 36))
         #print(fixang(light.angle),reflector.lineangle,fixang(light.angle-180))
         if((light.angle>0) and (light.angle-180<0)):
            if not( (fixang(light.angle)>=reflector.lineangle) or (reflector.lineangle>=fixang(light.angle-180))):

@@ -16,7 +16,9 @@ class Drag:
         self.bg=pygame.image.load('mirror.png')
         self.bg=pygame.transform.scale(self.bg,(self.arm,self.arm))
         self.rightClick=False
+        self.dorotate=False
         self.rotate=90;
+        self.prevang=90
     def __str__ (self):
         return 'Drag->({},{})'.format(self.center[0],self.center[1])
 
@@ -109,14 +111,34 @@ class Drag:
             mx,my=pygame.mouse.get_pos()
             self.center=(mx-self.offx,my-self.offy)
             self.calculate_pos()
+            print("working")
+            
+
+        # if(self.is_rotate()):
+        #     mx,my=pygame.mouse.get_pos()
+        #     mouse_state=pygame.mouse.get_pressed()
+        #     #print(mouse_state)
+        #     if(mouse_state[0]):
+        #         self.rotate+=0.1;  
+        #     elif(mouse_state[2]):
+        #         self.rotate-=0.1; 
 
         if(self.is_rotate()):
             mx,my=pygame.mouse.get_pos()
             mouse_state=pygame.mouse.get_pressed()
-            #print(mouse_state)
             if(mouse_state[0]):
-                self.rotate+=0.1;  
-            elif(mouse_state[2]):
-                self.rotate-=0.1; 
+                ang=(-1)*math.atan2(self.center[1]-my,self.center[0]-mx)*180/math.pi
+                if(not self.dorotate):
+                    self.prevang=ang
+                    self.dorotate=True
+                else:
+                    self.rotate+=(ang-self.prevang);
+                    self.prevang=ang
+            else:
+                self.dorotate=False
+        
+                
+            # elif(mouse_state[2]):
+            #     self.rotate-=0.1; 
         self.reflector=self.line()
         
