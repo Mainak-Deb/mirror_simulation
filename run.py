@@ -10,7 +10,7 @@ import intersect
 
 pygame.init()
 width=1200
-height=680;
+height=690;
 screen=pygame.display.set_mode((width,height))
 pygame.display.set_caption("Line rotate")
 update=Updater()
